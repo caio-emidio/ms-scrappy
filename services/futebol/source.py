@@ -11,8 +11,10 @@ def trataTeam(teams, resultado, index):
     result = {
         "name": teams[index].text,
         "image": montaImg(homeId),
-        "score": resultado[index],
     }
+
+    if(len(resultado) > 0):
+        result["score"] = resultado[index]
 
     return result
 
@@ -39,16 +41,12 @@ def trataTabelaCalendario(tabela):
     dia = tabela.find_all('div', {'class': 'matchTeams'})
     teams = tabela.find_all('a', {'class': 'AnchorLink Table__Team'})
     tdTable = tabela.find_all('td', {'class': 'Table__TD'})
-    homeId = teams[0]["href"].split("/")[5]
-    awayId = teams[1]["href"].split("/")[5]
 
     result = {
         "data": dia[0].text.split(",")[1].strip().split(".")[0].replace(" ", "/"),
         "time": tdTable[4].text,
-        "home": teams[0].text,
-        "homeImg": montaImg(homeId),
-        "away": teams[1].text,
-        "awayImg": montaImg(awayId),
+        "home": trataTeam(teams, [], 0),
+        "away": trataTeam(teams, [], 1),
         "championship": tdTable[5].text,
     }
 
