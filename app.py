@@ -9,6 +9,7 @@ import random
 # apps
 import services.investments.source as investments
 import services.filmes.source as filmes
+import services.futebol.source as futebol
 
 app = Flask(__name__)
 
@@ -32,11 +33,21 @@ def filmesagora():
     body = request.json
     return jsonify(filmes.result(body['url']))
 
+
 @app.route('/filmes/detalhes', methods=['POST'])
 def detalhesfilmes():
     body = request.json
     return jsonify(filmes.detalhes_filme(body['url']))
 
+
+@app.route('/futebol/resultados', methods=['GET'])
+def resultados():
+    return jsonify(futebol.busca("resultados"))
+
+
+@app.route('/futebol/calendario', methods=['GET'])
+def calendario():
+    return jsonify(futebol.busca("calendario"))
 
 
 if __name__ == '__main__':
