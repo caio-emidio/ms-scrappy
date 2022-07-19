@@ -4,6 +4,7 @@
 import requests
 import bs4
 import flask
+from flask_cors import CORS, cross_origin
 
 from flask import Flask
 from flask import jsonify
@@ -15,7 +16,8 @@ import services.filmes.source as filmes
 import services.futebol.source as futebol
 
 app = Flask(__name__)
-
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 @app.route('/index')
@@ -44,11 +46,13 @@ def detalhesfilmes():
 
 
 @app.route('/futebol/resultados', methods=['GET'])
+@cross_origin()
 def resultados():
     return jsonify(futebol.busca("resultados"))
 
 
 @app.route('/futebol/calendario', methods=['GET'])
+@cross_origin()
 def calendario():
     return jsonify(futebol.busca("calendario"))
 
