@@ -3,28 +3,27 @@ from bs4 import BeautifulSoup
 
 
 def trata_filme(filme):
-    img = filme.find('img')
-    a = filme.find('a')
-    nome = img['alt']
-    img = img['src']
-    url = a['href']
-    result = {
-        "nome": nome,
-        "img": img,
-        "url": url
+    poster = filme.find('div', {'class': 'box-filme-img'})
+    link = filme.find('a', {'class': 'filme-link'})
+    return {
+        "name": poster.find('img')["alt"],
+        "url": link['href'],
+        "img": poster.find('img')["src"]
     }
-    return result
+
 
 def result(url):
     result = []
     site = requests.get(url)
     soup = BeautifulSoup(site.text, 'html.parser')
 
-    filmes = soup.find_all('div', {'class': 'ItemN'})
+    filmes = soup.find_all('div', {'class': 'box-filme-container'})
+    
     result = []
+    print(filmes[0])
     for filme in filmes:
         result.append(trata_filme(filme))
-    return {"data": result}
+    return result
 
 def detalhes_filme(url):
     site = requests.get(url)
