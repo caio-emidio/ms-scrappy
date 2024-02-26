@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "ms-python.debugpy",
+        "ms-python.python"
+    ]
+}
