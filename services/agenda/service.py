@@ -1,11 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from notion_client import Client
 import json
-
-# Inicialize o cliente Notion com o token de integração
-client = Client(auth="secret_2VdrsG2w6aBuALQB1JW1aOp7GvY6rX8XMYb1riAiHPz")
-
 
 def busca(url):
     site = requests.get(url)
@@ -103,13 +98,3 @@ def addPage(data):
     url = "https://api.notion.com/v1/pages"
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response)
-
-
-# url = input("Digite a URL do evento: ")
-# while(1):
-#     try:
-#         busca(url)
-#     except:
-#         print("URL inválida")
-#     url = input("Digite a URL do evento: ")
