@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import requests
-import bs4
 import flask
 from flask_cors import CORS, cross_origin
 
@@ -14,6 +12,7 @@ import random
 import services.investments.source as investments
 import services.filmes.source as filmes
 import services.futebol.source as futebol
+import services.agenda.service as agenda
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -51,11 +50,20 @@ def resultados():
     return jsonify(futebol.busca("resultados"))
 
 
-@app.route('/futebol/calendario', methods=['GET'])
+@app.route('/agenda/<path:url>', methods=['GET'])
 @cross_origin()
-def calendario():
-    return jsonify(futebol.busca("calendario"))
+def calendario(url):
+    return jsonify(agenda.busca(url))
 
+@app.route('/agenda/add', methods=['GET'])
+@cross_origin()
+def addCalendar():
+    return agenda.addNotion()
+
+# @app.route('/futebol/calendario', methods=['GET'])
+# @cross_origin()
+# def calendario():
+#     return jsonify(futebol.busca("calendario"))
 
 if __name__ == '__main__':
     app.run(debug=True)
